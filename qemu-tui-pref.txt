@@ -1,0 +1,2 @@
+qemu-path
+C:\QEMU-TUI

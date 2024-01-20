@@ -1,0 +1,9 @@
+machine : ich9
+cpu : IntelNehalem-C
+display : sdl
+accel : Hyper-V-no-irqchip
+device : usb-ich9, USBMouse, USBKeyboard
+vga : virtio-gpu
+m : 4G
+smp : 8,cores=8
+L : pc-bios
