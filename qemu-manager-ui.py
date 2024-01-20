@@ -90,13 +90,14 @@ else:
 
 enter = 'Press Enter to continue'
 title = '''QEMU-Lite-Manager'''
-pages = {'Home':['This is the Home page of QEMU-Lite-Manager-UI.\nType numbers or letters to execute.\n1. Add VM\n2. Convert Virtual Machine File to Script\n3. Start VM\nV. Version\nA. Exit', 'Home'], 
+pages = {'Home':['This is the Home page of QEMU-Lite-Manager-UI.\nType numbers or letters to execute.\n1. Add VM\n2. Convert Virtual Machine File to Script\n3. Start VM\nG. Set QEMU path\nV. Version\nA. Exit', 'Home'], 
 'Convert':['Enter VM Name needed to convert to .bat: ', 'Convert    A: Home'], 
 'Add':['Enter Preset Name and VM Name', 'Add VM - A: Home'], 
 'Start':['Enter VM Name: ', 'Start VM - A: Home'], 
 'Version':['QEMU-Lite-Manager-UI', 'Version'], 
 'Invalid':['Choice is invalid.\nPlease Retry', 'Invalid Choice'], 
-'Successful':['Successfully executed command', 'Successful']}
+'Successful':['Successfully executed command', 'Successful'], 
+'Setpath':['Enter QEMU Path: ', 'Set QEMU Path']}
 dir = path.dirname(argv[0])
 # Init Add VM Menu
 # print(f'cd {dir}{dash}Preset-{_s()} {And} {ls} *.qvm > {dir}{dash}temp.000')
@@ -143,6 +144,8 @@ while True:
             page = 'Start'
         elif choice.lower() == 'a':
             exit()
+        elif choice.lower() == 'g':
+            page = 'Setpath'
         elif choice.lower() == 'v':
             page = 'Version'
     elif page == 'Add':
@@ -165,12 +168,17 @@ while True:
             page = 'Home'
         else:
             system(f'cd {dir} {And} qemu-manager --generate-bat {choice}')
-        finput('Press Enter to continue')
+        finput(enter)
         0
     elif page == 'Start':
         choice = finput('')
         system(f'cd {dir} {And} qemu-manager --launch {choice} --force-start')
         finput(enter)
+        page = 'Home'
+    elif page == 'Setpath':
+        choice = finput('path: ')
+        with open('qemu-tui-pref.txt', 'w') as f:
+            f.write(f'qemu-path\n{choice}')
         page = 'Home'
     elif page == 'Version':
         system(f'cd {dir} {And} qemu-manager --fversion')
